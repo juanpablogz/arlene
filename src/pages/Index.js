@@ -1,9 +1,10 @@
 import React from 'react'
+import { Form } from '../components/Form'
 
 export const Index = () => {
     return (
         <div>
-            <h1>index</h1>
+           <Form/>
         </div>
     )
 }

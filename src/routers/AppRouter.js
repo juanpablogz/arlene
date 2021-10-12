@@ -5,16 +5,18 @@ import { Dashboard } from "../pages/Dashboard";
 import { Login } from "../pages/Login";
 import { NotFound } from "../pages/NotFound";
 import { Register } from "../pages/Register";
+import { PrivateRoute } from "./PrivateRoute";
+import { PublicRoute } from "./PublicRoute";
 
 export const AppRouter = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Index} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/dashboard" component={Dashboard} />
-        <Route path="/*" component={NotFound} />
+        <PublicRoute exact path="/" component={Index} />
+        <PublicRoute exact path="/login" component={Login} />
+        <PublicRoute exact path="/register" component={Register} />
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        <PublicRoute path="/*" component={NotFound} />
       </Switch>
     </Router>
   );
