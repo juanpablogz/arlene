@@ -1,13 +1,12 @@
-import React from "react";
+import React, {lazy} from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
-import { Index } from "../pages/Index";
 import { Dashboard } from "../pages/Dashboard";
-import { Login } from "../pages/Login";
 import { NotFound } from "../pages/NotFound";
 import { Register } from "../pages/Register";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
-
+import { Index } from "../pages/Index";
+import Login from "../pages/Login";
 export const AppRouter = () => {
   return (
     <Router>

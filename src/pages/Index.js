@@ -1,10 +1,12 @@
-import React from 'react'
-import { Form } from '../components/Form'
+import React, { Suspense, lazy } from "react";
+import Spinner from "../components/Spinner";
+
+const Form = lazy(() => import("../components/Form"));
 
 export const Index = () => {
-    return (
-        <div>
-          <Form/>
-        </div>
-    )
-}
+  return (
+    <Suspense fallback={<Spinner />}>
+      <Form />
+    </Suspense>
+  );
+};
