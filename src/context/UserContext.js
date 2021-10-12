@@ -66,16 +66,11 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  const signInWithEmailAndPassword = async (email, password) => {
+  const signIn= async (email, password) => {
     try {
       const auth = getAuth();
-      signInWithEmailAndPassword(auth, email, password).then(
-        (userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          // ...
-        }
-      );
+      let authentication =  await signInWithEmailAndPassword(auth, email, password);
+      console.log(authentication)
     } catch (err) {
       console.error(err);
     }
@@ -94,7 +89,7 @@ const UserProvider = ({ children }) => {
     user,
     signInWithGoogle,
     registerWithEmailAndPassword,
-    signInWithEmailAndPassword,
+    signIn,
   };
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
 };

@@ -4,7 +4,7 @@ import { Form } from '../components/Form'
 export const Index = () => {
     return (
         <div>
-           <Form/>
+          <Form/>
         </div>
     )
 }

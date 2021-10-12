@@ -8,12 +8,12 @@ export const Form = () => {
   const onSubmit = (data) => {
     let email = data.email;
     let password = data.password;
-    registerWithEmailAndPassword(email, password);
+    signIn(email, password);
   };
   const {
     signInWithGoogle,
-    registerWithEmailAndPassword,
-    signInWithEmailAndPassword,
+    registerUser,
+    signIn,
   } = useContext(UserContext);
   return (
     <div className="flex flex-col-12 justify-center content-center">
