@@ -16,6 +16,7 @@ export default function Table() {
             <th className="w-1/4 ">Email</th>
           </tr>
         </thead>
+
         <tbody>
           {console.log(data)}
           {!isLoading ? (
@@ -58,7 +59,6 @@ export default function Table() {
           )}
         </tbody>
       </table>
-
       {isError && <div>Error fetching data.</div>}
     </div>
   );

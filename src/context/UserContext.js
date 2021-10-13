@@ -31,9 +31,11 @@ const googleProvider = new GoogleAuthProvider();
 
 const UserProvider = ({ children }) => {
   const history = useHistory();
+
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
+  const [error, setError] = useState("");
   const signInWithGoogle = async () => {
     try {
       signInWithPopup(auth, googleProvider)
@@ -72,6 +74,7 @@ const UserProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(authentication.user));
     } catch (err) {
       console.error(err);
+      setError('Invalid request')
     }
   };
 
@@ -89,7 +92,7 @@ const UserProvider = ({ children }) => {
         setUser(authentication.user);
       }
     } catch (err) {
-      console.error(err);
+      setError('Invalid email or password')
     }
   };
 
@@ -110,9 +113,12 @@ const UserProvider = ({ children }) => {
       localStorage.removeItem("user");
       console.log(error);
     }
-  }, [user]);
+  }, [user, error]);
+
+
 
   const data = {
+    error,
     user,
     signInWithGoogle,
     registerWithEmailAndPassword,

@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 
 export default function SignIn() {
   const history = useHistory();
-  const { signInWithGoogle, signIn } = useContext(UserContext);
+  const { signInWithGoogle, signIn, error } = useContext(UserContext);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -16,7 +16,7 @@ export default function SignIn() {
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string()
-        .max(20, "Must be 20 characters or less")
+        .min(6, "Must have 6 characters or more")
         .required("Required"),
     }),
     onSubmit: (values) => {
@@ -63,6 +63,7 @@ export default function SignIn() {
           <img src={google} className="absolute w-6" alt="Google" />
           <p className="text-gray-700">SignIn with Google</p>
         </button>
+        {error}
         <button
           type="submit"
           className="mt-4 w-full bg-green-400 hover:bg-green-600 text-green-100 border shadow py-3 px-6 font-semibold text-md rounded"

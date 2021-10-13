@@ -7,19 +7,22 @@ import { useHistory } from "react-router-dom";
 
 export default function Register() {
   const history = useHistory();
-  const { signInWithGoogle, registerWithEmailAndPassword } =
+  const { signInWithGoogle, registerWithEmailAndPassword, error } =
     useContext(UserContext);
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
       email: "",
+      password: "",
+      repeatPassword: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string()
-        .max(20, "Must be 20 characters or less")
+        .min(6, "Must have 6 characters or more")
         .required("Required"),
+      repeatPassword: Yup.string()
+        .min(6, "Must have 6 characters or more")
+        .required("Required").oneOf([Yup.ref("password")], "Password not match"),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -37,7 +40,7 @@ export default function Register() {
           name="email"
           type="text"
           placeholder="email"
-          className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mb-8"
+          className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mb-4 mt-4"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.email}
@@ -51,7 +54,7 @@ export default function Register() {
           name="password"
           type="password"
           placeholder="password"
-          className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mb-4"
+          className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mb-4 mt-4"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.password}
@@ -60,14 +63,29 @@ export default function Register() {
           <div>{formik.errors.password}</div>
         ) : null}
 
+        <input
+          id="repeatPassword"
+          name="repeatPassword"
+          type="password"
+          placeholder="repeat Password"
+          className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mb-4 mt-4"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.repeatPassword}
+        />
+        {formik.touched.repeatPassword && formik.errors.repeatPassword ? (
+          <div>{formik.errors.repeatPassword}</div>
+        ) : null}
+
         <button
-          className="shadow mb-2  w-full rounded py-2 px-4 bg-white-400 hover:bg-gray-100"
+          className="shadow mb-2  w-full rounded py-2 px-4 bg-white-400 hover:bg-gray-100 mt-2"
           onClick={signInWithGoogle}
         >
           <img src={google} className="absolute w-6 " alt="Google" />
 
           <p className="text-gray-700">Register with Google</p>
         </button>
+        {error}
         <button
           type="submit"
           className="mt-4 w-full bg-green-400 hover:bg-green-600 text-green-100 border shadow py-3 px-6 font-semibold text-md rounded"
