@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -27,7 +28,13 @@ const db = getFirestore(app);
 
 const googleProvider = new GoogleAuthProvider();
 
+
 const UserProvider = ({ children }) => {
+  const history = useHistory();
+  const handleClick = () => {
+    console.log('dashboard')
+    history.push("/dashboard");
+  };
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
@@ -35,12 +42,12 @@ const UserProvider = ({ children }) => {
     try {
       signInWithPopup(auth, googleProvider)
         .then((result) => {
-
           const credential = GoogleAuthProvider.credentialFromResult(result);
           console.log(result)
           const token = credential.accessToken;
           const user = result.user;
           localStorage.setItem("user", JSON.stringify(user));
+          handleClick()
         })
         .catch((err) => {
           const credential = GoogleAuthProvider.credentialFromError(err);
@@ -60,6 +67,7 @@ const UserProvider = ({ children }) => {
         password
       );
       console.log(authentication);
+      handleClick()
       localStorage.setItem("user", JSON.stringify(authentication.user));
     } catch (err) {
       console.error(err);

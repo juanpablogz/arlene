@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { Suspense, lazy } from "react";
+import Spinner from "../components/Spinner";
+
+const RegisterUser = lazy(() => import("../components/Register"));
 
 export const Register = () => {
-    return (
-        <div>
-            <h1>Register</h1>
-        </div>
-    )
-}
+  return (
+    <Suspense fallback={<Spinner />}>
+      <RegisterUser />
+    </Suspense>
+  );
+};

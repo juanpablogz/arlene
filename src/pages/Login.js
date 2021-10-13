@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { Suspense, lazy } from "react";
+import Spinner from "../components/Spinner";
 
-function Login()  {
-    return (
-        <div>
-            <h1>Login</h1>
-        </div>
-    )
-}
-export default Login
+const SignIn = lazy(() => import("../components/SignIn"));
+
+export const Login = () => {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <SignIn />
+    </Suspense>
+  );
+};
