@@ -7,9 +7,6 @@ import { useHistory } from "react-router-dom";
 
 export default function SignIn() {
   const history = useHistory();
-  const handleClick = () => {
-    history.push("/");
-  };
   const { signInWithGoogle, signIn } = useContext(UserContext);
   const formik = useFormik({
     initialValues: {
@@ -61,10 +58,9 @@ export default function SignIn() {
         ) : null}
 
         <button
-          className="shadow mb-2  w-full rounded py-2 px-4"
-          onClick={signInWithGoogle}
-        >
-          <img src={google} className="absolute w-6" alt="spinner" />
+          className="shadow mb-2  w-full rounded py-2 px-4 bg-white-400 hover:bg-gray-100"
+          onClick={signInWithGoogle}>
+          <img src={google} className="absolute w-6" alt="Google" />
           <p className="text-gray-700">SignIn with Google</p>
         </button>
         <button
@@ -74,7 +70,7 @@ export default function SignIn() {
           SignIn
         </button>
         <p>
-          Don't have account? <strong onClick={handleClick}>Register</strong>
+          Don't have account? <strong className="cursor-pointer" onClick={() => history.push("/")}>Register</strong>
         </p>
       </form>
     </div>

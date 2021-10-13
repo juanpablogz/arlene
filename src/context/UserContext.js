@@ -44,7 +44,7 @@ const UserProvider = ({ children }) => {
           const user = result.user;
           localStorage.setItem("user", JSON.stringify(user));
           console.log(history);
-          setUser(user)
+          setUser(user);
           history.push("/dashboard");
         })
         .catch((err) => {
@@ -94,13 +94,14 @@ const UserProvider = ({ children }) => {
   };
 
   const logout = () => {
-    signOut(auth).then(() => {
-      setUser(null)
-      console.log(user)
-    }).catch((error) => {
-      // An error happened.
-    });
-    
+    signOut(auth)
+      .then(() => {
+        setUser(null);
+        console.log(user);
+      })
+      .catch((error) => {
+        // An error happened.
+      });
   };
   useEffect(() => {
     try {

@@ -12,13 +12,13 @@ export const AppRouter = () => {
   return (
     <Router>
       <UserProvider>
-        <Switch>
-          <PublicRoute exact path="/" component={Register} />
-          <PublicRoute exact path="/login" component={Login} />
-          <PublicRoute exact path="/register" component={Register} />
-          <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          <PublicRoute path="/*" component={NotFound} />
-        </Switch>
+          <Switch>
+            <PublicRoute exact path="/" component={Register} />
+            <PublicRoute exact path="/login" component={Login} />
+            <PublicRoute exact path="/register" component={Register} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PublicRoute path="/*" component={NotFound} />
+          </Switch>
       </UserProvider>
     </Router>
   );

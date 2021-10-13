@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
-import UserContext from "../context/UserContext";
+import React, { useContext, useEffect, useState, Suspense, lazy } from "react";
+import Spinner from "../components/Spinner";
+const Table = lazy(() => import("../components/Table"));
 export const Dashboard = () => {
-  const { user, logout } = useContext(UserContext);
   return (
-    <div>
-      <h1 onClick={logout}>logout</h1>
-    </div>
+    <Suspense fallback={<Spinner />}>
+      <Table />
+    </Suspense>
   );
 };
