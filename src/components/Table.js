@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import UserContext from "../context/UserContext";
 import Spinner from "./Spinner";
-export default function Table({data, isError, isLoading}) {
+export default function Table () {
+const { logout, dataFetch, isError , isLoading } = useContext(UserContext);
   return (
     <div className="flex justify-center items-center h-screen w-screen">
+      {console.log(dataFetch)}
       <table className="table-fixed">
         <thead>
           <tr>
@@ -13,7 +16,7 @@ export default function Table({data, isError, isLoading}) {
 
         <tbody>
           {!isLoading ? (
-            Object.values(data).map((data, i) => (
+            Object.values(dataFetch).map((data, i) => (
               <tr key={data.id}>
                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <div className="flex">

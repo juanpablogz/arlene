@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { initializeApp } from "firebase/app";
+import axios from 'axios';
 import {
   getAuth,
   signInWithPopup,
@@ -27,11 +28,17 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore(app);
 
+
+
 const googleProvider = new GoogleAuthProvider();
 
 const UserProvider = ({ children }) => {
-  const history = useHistory();
 
+  const history = useHistory();
+  const [dataFetch, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
@@ -106,6 +113,20 @@ const UserProvider = ({ children }) => {
         // An error happened.
       });
   };
+
+  const fetchData = async (page) => {
+    try {
+      console.log(page)
+      const response = await axios.get(`https://reqres.in/api/users?page=${page || 1}`);
+      setIsLoading(false);
+      setData(response.data.data);
+    } catch (error) {
+      setIsLoading(false);
+      setIsError(true);
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     try {
       localStorage.setItem("user", JSON.stringify(user));
@@ -115,7 +136,9 @@ const UserProvider = ({ children }) => {
     }
   }, [user, error]);
 
-
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const data = {
     error,
@@ -124,6 +147,10 @@ const UserProvider = ({ children }) => {
     registerWithEmailAndPassword,
     signIn,
     logout,
+    isLoading,
+    isError,
+    dataFetch,
+    fetchData
   };
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
 };
