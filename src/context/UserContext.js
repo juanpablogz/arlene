@@ -115,6 +115,7 @@ const UserProvider = ({ children }) => {
       setIsLoading(true);
       const response = await axios.get(`https://reqres.in/api/users?page=${page || 1}`);
       setIsLoading(false);
+      console.log(page)
       setcurrentPage(page || 1)
       setData(response.data.data);
     } catch (error) {
@@ -124,6 +125,22 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const control = async (a) => {
+    try {
+      if (a == 'next' && currentPage < 7) {
+        let page = currentPage + 1
+        setcurrentPage(page)
+        fetchData(page)
+      }
+      if (a == 'previus'  && currentPage >= 1) {
+        let page = currentPage - 1
+        setcurrentPage(page)
+        fetchData(page)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     try {
       localStorage.setItem("user", JSON.stringify(user));
@@ -148,7 +165,8 @@ const UserProvider = ({ children }) => {
     isError,
     dataFetch,
     fetchData,
-    currentPage
+    currentPage,
+    control
   };
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
 };

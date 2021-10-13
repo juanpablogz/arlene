@@ -15,7 +15,7 @@ const { logout, dataFetch, isError , isLoading } = useContext(UserContext);
 
         <tbody>
           {!isLoading ? (
-            Object.values(dataFetch).map((data, i) => (
+            Object.values(dataFetch).map((data) => (
               <tr key={data.id}>
                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <div className="flex">
