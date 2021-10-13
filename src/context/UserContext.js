@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 
 import { getFirestore } from "firebase/firestore";
@@ -92,6 +93,15 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    signOut(auth).then(() => {
+      setUser(null)
+      console.log(user)
+    }).catch((error) => {
+      // An error happened.
+    });
+    
+  };
   useEffect(() => {
     try {
       localStorage.setItem("user", JSON.stringify(user));
@@ -106,6 +116,7 @@ const UserProvider = ({ children }) => {
     signInWithGoogle,
     registerWithEmailAndPassword,
     signIn,
+    logout,
   };
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
 };
