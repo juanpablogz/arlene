@@ -28,13 +28,8 @@ const db = getFirestore(app);
 
 const googleProvider = new GoogleAuthProvider();
 
-
 const UserProvider = ({ children }) => {
   const history = useHistory();
-  const handleClick = () => {
-    console.log('dashboard')
-    history.push("/dashboard");
-  };
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
@@ -43,11 +38,13 @@ const UserProvider = ({ children }) => {
       signInWithPopup(auth, googleProvider)
         .then((result) => {
           const credential = GoogleAuthProvider.credentialFromResult(result);
-          console.log(result)
+          console.log(result);
           const token = credential.accessToken;
           const user = result.user;
           localStorage.setItem("user", JSON.stringify(user));
-          handleClick()
+          console.log(history);
+          setUser(user)
+          history.push("/dashboard");
         })
         .catch((err) => {
           const credential = GoogleAuthProvider.credentialFromError(err);
@@ -66,19 +63,30 @@ const UserProvider = ({ children }) => {
         email,
         password
       );
-      console.log(authentication);
-      handleClick()
+      if (authentication.user) {
+        console.log("pasaste");
+        history.push("/dashboard");
+        setUser(authentication.user);
+      }
       localStorage.setItem("user", JSON.stringify(authentication.user));
     } catch (err) {
       console.error(err);
     }
   };
 
-  const signIn= async (email, password) => {
+  const signIn = async (email, password) => {
     try {
       const auth = getAuth();
-      let authentication =  await signInWithEmailAndPassword(auth, email, password);
-      console.log(authentication)
+      let authentication = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (authentication.user) {
+        console.log("pasaste");
+        history.push("/dashboard");
+        setUser(authentication.user);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -86,12 +94,12 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     try {
-      localStorage.setItem("user", JSON.stringify(user))
+      localStorage.setItem("user", JSON.stringify(user));
     } catch (error) {
-      localStorage.removeItem("user")
-      console.log(error)
+      localStorage.removeItem("user");
+      console.log(error);
     }
-  }, [user])
+  }, [user]);
 
   const data = {
     user,

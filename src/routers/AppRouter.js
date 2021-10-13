@@ -7,9 +7,11 @@ import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 import { Index } from "../pages/Index";
 import { Login } from "../pages/Login";
+import { UserProvider } from "../context/UserContext";
 export const AppRouter = () => {
   return (
     <Router>
+      <UserProvider>
         <Switch>
           <PublicRoute exact path="/" component={Register} />
           <PublicRoute exact path="/login" component={Login} />
@@ -17,6 +19,7 @@ export const AppRouter = () => {
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PublicRoute path="/*" component={NotFound} />
         </Switch>
+      </UserProvider>
     </Router>
   );
 };
