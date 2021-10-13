@@ -1,12 +1,6 @@
 import React from "react";
-import useAxios from "../hooks/useAxios";
 import Spinner from "./Spinner";
-export default function Table() {
-  const {
-    isLoading,
-    isError,
-    data: data,
-  } = useAxios("https://reqres.in/api/users?page=2");
+export default function Table({data, isError, isLoading}) {
   return (
     <div className="flex justify-center items-center h-screen w-screen">
       <table className="table-fixed">
@@ -18,7 +12,6 @@ export default function Table() {
         </thead>
 
         <tbody>
-          {console.log(data)}
           {!isLoading ? (
             Object.values(data).map((data, i) => (
               <tr key={data.id}>

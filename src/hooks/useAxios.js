@@ -6,8 +6,10 @@ const useAxios = (url) => {
   const [isError, setIsError] = useState(false);
   const fetchData = async () => {
     try {
+
       const response = await axios.get(url);
       setIsLoading(false);
+      console.log('request')
       setData(response.data.data);
     } catch (error) {
       setIsLoading(false);
