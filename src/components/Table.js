@@ -8,8 +8,8 @@ const { logout, dataFetch, isError , isLoading } = useContext(UserContext);
       <table className="table-fixed">
         <thead>
           <tr>
-            <th className="w-1/4 ">User</th>
-            <th className="w-1/4 ">Email</th>
+            <th className="w-1/4 px-5 py-3 border-b-2 border-gray-200 bg-blue-200 text-center text-xs font-bold">User</th>
+            <th className="w-1/4  px-5 py-3 border-b-2 border-gray-200 bg-blue-200 text-center text-xs font-bold">Email</th>
           </tr>
         </thead>
 

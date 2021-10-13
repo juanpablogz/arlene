@@ -5,7 +5,6 @@ import { NotFound } from "../pages/NotFound";
 import { Register } from "../pages/Register";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
-import { Index } from "../pages/Index";
 import { Login } from "../pages/Login";
 import { UserProvider } from "../context/UserContext";
 export const AppRouter = () => {

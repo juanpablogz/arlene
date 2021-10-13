@@ -89,7 +89,7 @@ export default function Register() {
           Register
         </button>
         <p>
-          Don't have account?
+          have account?
           <strong className="cursor-pointer ml-1" onClick={() => history.push("/login")}>Login</strong>
         </p>
       </form>
