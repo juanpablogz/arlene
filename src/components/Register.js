@@ -17,15 +17,11 @@ export default function Register() {
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string()
-        .min(6, "Must have 6 characters or more")
-        .required("Required"),
-      repeatPassword: Yup.string()
-        .min(6, "Must have 6 characters or more")
-        .required("Required").oneOf([Yup.ref("password")], "Password not match"),
+      password: Yup.string().min(6, "Must have 6 characters or more").required("Required"),
+      repeatPassword: Yup.string().min(6, "Must have 6 characters or more").required("Required").oneOf([Yup.ref("password")], "Password not match"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       registerWithEmailAndPassword(values.email, values.password);
     },
   });

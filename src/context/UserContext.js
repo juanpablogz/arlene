@@ -38,7 +38,8 @@ const UserProvider = ({ children }) => {
   const [dataFetch, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  
+  const [currentPage, setcurrentPage] = useState("1");
+
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
@@ -48,11 +49,9 @@ const UserProvider = ({ children }) => {
       signInWithPopup(auth, googleProvider)
         .then((result) => {
           const credential = GoogleAuthProvider.credentialFromResult(result);
-          console.log(result);
           const token = credential.accessToken;
           const user = result.user;
           localStorage.setItem("user", JSON.stringify(user));
-          console.log(history);
           setUser(user);
           history.push("/dashboard");
         })
@@ -74,7 +73,6 @@ const UserProvider = ({ children }) => {
         password
       );
       if (authentication.user) {
-        console.log("pasaste");
         history.push("/dashboard");
         setUser(authentication.user);
       }
@@ -94,7 +92,6 @@ const UserProvider = ({ children }) => {
         password
       );
       if (authentication.user) {
-        console.log("pasaste");
         history.push("/dashboard");
         setUser(authentication.user);
       }
@@ -107,7 +104,6 @@ const UserProvider = ({ children }) => {
     signOut(auth)
       .then(() => {
         setUser(null);
-        console.log(user);
       })
       .catch((error) => {
         // An error happened.
@@ -116,9 +112,10 @@ const UserProvider = ({ children }) => {
 
   const fetchData = async (page) => {
     try {
-      console.log(page)
+      setIsLoading(true);
       const response = await axios.get(`https://reqres.in/api/users?page=${page || 1}`);
       setIsLoading(false);
+      setcurrentPage(page || 1)
       setData(response.data.data);
     } catch (error) {
       setIsLoading(false);
@@ -150,7 +147,8 @@ const UserProvider = ({ children }) => {
     isLoading,
     isError,
     dataFetch,
-    fetchData
+    fetchData,
+    currentPage
   };
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
 };

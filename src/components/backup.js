@@ -11,7 +11,7 @@ export default function Form({ data }) {
     let password = data.password;
     signIn(email, password);
   };
-  console.log(data);
+  // console.log(data);
   const { signInWithGoogle, registerUser, signIn } = useContext(UserContext);
   return (
     <div className="flex justify-center items-center h-screen ">

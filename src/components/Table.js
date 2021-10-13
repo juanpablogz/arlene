@@ -4,8 +4,7 @@ import Spinner from "./Spinner";
 export default function Table () {
 const { logout, dataFetch, isError , isLoading } = useContext(UserContext);
   return (
-    <div className="flex justify-center items-center h-screen w-screen">
-      {console.log(dataFetch)}
+    <div className="flex justify-center items-center h-4/5 w-screen">
       <table className="table-fixed">
         <thead>
           <tr>
@@ -56,6 +55,7 @@ const { logout, dataFetch, isError , isLoading } = useContext(UserContext);
         </tbody>
       </table>
       {isError && <div>Error fetching data.</div>}
+      
     </div>
   );
 }

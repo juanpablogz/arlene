@@ -4,14 +4,18 @@ import Spinner from "../components/Spinner";
 import UserContext from "../context/UserContext";
 const Table = lazy(() => import("../components/Table"));
 export const Dashboard = () => {
-  const { logout, data, isError , isLoading } = useContext(UserContext);
+  const { logout, data, isError, isLoading } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const [postsPerPage] = useState(10);
-  const [pageNumbers, setPageNumbers] = useState([1,2,3,4,5,6,7])
+  const [pageNumbers, setPageNumbers] = useState([1, 2, 3, 4, 5, 6, 7])
   return (
     <Suspense fallback={<Spinner />}>
-      <h1 onClick={logout}>logout</h1>
-      <Table/>
+      <div className="flex w-screen justify-end">
+        <button onClick={logout} className="shadow mb-2 text-white  w-20 rounded py-2 px-4 bg-red-400 hover:bg-red-600 mt-2 mr-2">
+          logout
+        </button>
+      </div>
+      <Table />
       <Pagination
         pageNumber={postsPerPage}
         totalPosts={posts.length}
