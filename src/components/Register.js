@@ -42,7 +42,7 @@ export default function Register() {
           value={formik.values.email}
         />
         {formik.touched.email && formik.errors.email ? (
-          <div>{formik.errors.email}</div>
+          <span className="text-xs text-red-700" id="passwordHelp">{formik.errors.email}</span>
         ) : null}
 
         <input
@@ -56,7 +56,7 @@ export default function Register() {
           value={formik.values.password}
         />
         {formik.touched.password && formik.errors.password ? (
-          <div>{formik.errors.password}</div>
+          <span className="text-xs text-red-700" id="passwordHelp">{formik.errors.password}</span>
         ) : null}
 
         <input
@@ -70,7 +70,7 @@ export default function Register() {
           value={formik.values.repeatPassword}
         />
         {formik.touched.repeatPassword && formik.errors.repeatPassword ? (
-          <div>{formik.errors.repeatPassword}</div>
+          <span className="text-xs text-red-700" id="passwordHelp">{formik.errors.repeatPassword}</span>
         ) : null}
 
         <button
@@ -90,7 +90,7 @@ export default function Register() {
         </button>
         <p>
           Don't have account?
-          <strong className="cursor-pointer" onClick={() => history.push("/login")}>Login</strong>
+          <strong className="cursor-pointer ml-1" onClick={() => history.push("/login")}>Login</strong>
         </p>
       </form>
     </div>

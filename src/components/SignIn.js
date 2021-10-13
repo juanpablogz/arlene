@@ -15,9 +15,7 @@ export default function SignIn() {
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string()
-        .min(6, "Must have 6 characters or more")
-        .required("Required"),
+      password: Yup.string().min(6, "Must have 6 characters or more").required("Required"),
     }),
     onSubmit: (values) => {
       signIn(values.email, values.password);
@@ -40,7 +38,7 @@ export default function SignIn() {
           value={formik.values.email}
         />
         {formik.touched.email && formik.errors.email ? (
-          <div>{formik.errors.email}</div>
+          <span className="text-xs text-red-700" id="passwordHelp">{formik.errors.email}</span>
         ) : null}
 
         <input
@@ -48,13 +46,13 @@ export default function SignIn() {
           name="password"
           type="password"
           placeholder="password"
-          className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mb-8"
+          className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mb-4"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.password}
         />
         {formik.touched.password && formik.errors.password ? (
-          <div>{formik.errors.password}</div>
+          <span className="text-xs text-red-700" id="passwordHelp">{formik.errors.password}</span>
         ) : null}
 
         <button
@@ -71,7 +69,7 @@ export default function SignIn() {
           SignIn
         </button>
         <p>
-          Don't have account? <strong className="cursor-pointer" onClick={() => history.push("/")}>Register</strong>
+          Don't have account? <strong className="cursor-pointer ml-1" onClick={() => history.push("/")}>Register</strong>
         </p>
       </form>
     </div>
