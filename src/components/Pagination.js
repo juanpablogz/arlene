@@ -3,9 +3,11 @@ import UserContext from '../context/UserContext';
 
 export default function Pagination() {
   const { fetchData, currentPage, control, pageNumbers } = useContext(UserContext);
-  // const totalPages = pageNumbers.total_pages
-  const totalPages = [1,2]
-  
+  const totalPages = []
+  for (let i = 1; i <= Math.ceil(pageNumbers); i++) {
+    totalPages.push(i);
+    // console.log(totalPages)
+  }
   return (
     <nav className="flex flex-row flex-nowrap justify-center items-center mt-3">
       <a onClick={() => control('previus') } className="flex w-10 h-10 mr-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Previous Page">

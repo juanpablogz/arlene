@@ -36,7 +36,7 @@ const UserProvider = ({ children }) => {
   const [error, setError] = useState("");
   const [user, setUser] = useState( JSON.parse(localStorage.getItem("user")) || null );
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = () => {
     try {
       signInWithPopup(auth, googleProvider)
         .then((result) => {
@@ -104,20 +104,20 @@ const UserProvider = ({ children }) => {
     try {
       setIsLoading(true);
       const response = await axios.get(`https://reqres.in/api/users?page=${page || 1}`);
-      console.log(response.data.total_page)
-      setPageNumbers(response.data)
+      console.log(response.data.total_pages)
+      setPageNumbers(response.data.total_pages)
+      setData(response.data.data);
       setIsLoading(false);
       setcurrentPage(page || 1)
-      setData(response.data.data);
     } catch (error) {
       setIsLoading(false);
       setIsError(true);
     }
   };
 
-  const control = async (action) => {
+  const control = (action) => {
     try {
-      if (action === 'next' && currentPage < pageNumbers.total_pages) {
+      if (action === 'next' && currentPage < pageNumbers) {
         let page = currentPage + 1
         setcurrentPage(page)
         fetchData(page)
