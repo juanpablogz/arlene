@@ -100,15 +100,32 @@ const UserProvider = ({ children }) => {
       });
   };
 
-  const fetchData = async (page) => {
+  const fetchData = async (page, numberOfUser = 3) => {
     try {
       setIsLoading(true);
+      console.log(numberOfUser);
       const response = await axios.get(`https://reqres.in/api/users?page=${page || 1}`);
       console.log(response.data.total_pages)
       setPageNumbers(response.data.total_pages)
       setData(response.data.data);
       setIsLoading(false);
       setcurrentPage(page || 1)
+      if (numberOfUser < 6) {
+        var result = response.data.data.reduce((resultArray, item, index) => { 
+          const chunkIndex = Math.floor(index/numberOfUser)
+        
+          if(!resultArray[chunkIndex]) {
+            resultArray[chunkIndex] = [] // start a new chunk
+          }
+        
+          resultArray[chunkIndex].push(item)
+        
+          return resultArray
+        }, [])
+        setData(result[0])
+        setPageNumbers(result.length)
+        console.log(result.length)
+      }
     } catch (error) {
       setIsLoading(false);
       setIsError(true);
@@ -121,6 +138,9 @@ const UserProvider = ({ children }) => {
         let page = currentPage + 1
         setcurrentPage(page)
         fetchData(page)
+      }
+      if (action === 'next' && currentPage >= pageNumbers) {
+        console.log('newfetch')
       }
       if (action === 'previus'  && currentPage >= 1) {
         let page = currentPage - 1
