@@ -7,22 +7,21 @@ export default function Table() {
     <div className="max-h-card  overflow-auto ">
       {!isLoading ? (
         Object.values(dataFetch).map((data) => (
-          <div key={data.id} className=" w-full flex justify-center items-center mb-2">
-
-            <div className="h-46 mx-4 w-5/6 bg-blue-300 hover:bg-blue-400 cursor-pointer rounded-3xl shadow-md sm:w-80 sm:mx-0">
-              <div className="h-1/2 w-full flex justify-center items-baseline px-3 py-5">
-                <h2 className="text-white">{data.email}</h2>
+          <div key={data.id} className=" w-full flex justify-center items-center mb-6">
+            <div className=" shadow-lg h-46 mx-4 w-5/6 bg-blue-300 hover:bg-blue-400 cursor-pointer rounded-3xl sm:w-3/6 sm:mx-0">
+              <div className="h-1/2 w-full flex justify-center items-baseline px-3 py-3">
+                <img
+                  className="object-cover h-20 w-20 rounded-full "
+                  src={data.avatar}
+                  alt="avatar"
+                />
               </div>
 
-              <div className="bg-white h-1/2 w-full rounded-3xl flex flex-col justify-around items-center pt-2 ">
+              <div className="bg-white h-1/2 w-full rounded-2xl flex flex-col justify-around items-center pt-2 px-3 py-5">
 
-                <div className="w-full h-1/2 flex flex-col justify-center items-center">
-                  <img
-                    className="object-cover h-20 w-20 rounded-full "
-                    src={data.avatar}
-                    alt="avatar"
-                  />
-                  <h1 className="text-gray-500 text-sm pb-2">{`${data.first_name} ${data.last_name} `}</h1>
+                <div className="flex flex-col justify-center items-center">
+                  <h1 className="text-gray-500 font-bold text-sm pb-2">{`${data.first_name} ${data.last_name} `}</h1>
+                  <h2 className="text-gray-500 text-sm pb-2">{data.email}</h2>
                 </div>
               </div>
             </div>
