@@ -13,7 +13,7 @@ export const Dashboard = () => {
         </button>
       </div>
       <Table className="mb-2" />
-      <Pagination/>
+      <Pagination className="mt-2"/>
     </Suspense>
   );
 };

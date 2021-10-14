@@ -7,7 +7,7 @@ export default function Pagination() {
   const totalPages = [1,2]
   
   return (
-    <nav className="flex flex-row flex-nowrap justify-between md:justify-center items-center">
+    <nav className="flex flex-row flex-nowrap justify-between md:justify-center items-center mt-3">
       <a onClick={() => control('previus') } className="flex w-10 h-10 mr-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Previous Page">
         <span className="sr-only">Previous Page</span>
         <svg className="block w-4 h-4 fill-current" viewBox="0 0 256 512" aria-hidden="true" role="presentation">

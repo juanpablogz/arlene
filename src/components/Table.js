@@ -4,58 +4,35 @@ import Spinner from "./Spinner";
 export default function Table() {
   const { dataFetch, isError, isLoading } = useContext(UserContext);
   return (
-    <div className="flex justify-center items-center bg-scroll overflow-auto ">
-      <table className="table-fixed mt-8">
-        <thead>
-          <tr>
-            <th className=" px-5 py-3 border-b-2 border-gray-200 bg-blue-200 text-center text-xs font-bold">User</th>
-            <th className=" px-5 py-3 border-b-2 border-gray-200 bg-blue-200 text-center text-xs font-bold">Email</th>
-          </tr>
-        </thead>
+    <div className="max-h-card  overflow-auto ">
+      {!isLoading ? (
+        Object.values(dataFetch).map((data) => (
+          <div key={data.id} className=" w-full flex justify-center items-center mb-2">
 
-        <tbody>
-          {!isLoading ? (
-            Object.values(dataFetch).map((data) => (
-                <tr key={data.id} className="shadow rounded mb-3">
-                  <td className="px-5 py-5  bg-white text-sm">
-                    <div className="flex">
-                      <div className="flex-shrink-0 w-10 h-10">
-                        <img
-                          className="w-full h-full rounded-full"
-                          src={data.avatar}
-                          alt=""
-                        />
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          {`${data.first_name}  ${data.last_name}`}
-                        </p>
-                      </div>
-                    </div>
-                  </td>
+            <div className="h-46 mx-4 w-5/6 bg-blue-300 hover:bg-blue-400 cursor-pointer rounded-3xl shadow-md sm:w-80 sm:mx-0">
+              <div className="h-1/2 w-full flex justify-center items-baseline px-3 py-5">
+                <h2 className="text-white">{data.email}</h2>
+              </div>
 
-                  <td className="px-5 py-5  bg-white text-sm mb-8">
-                    <div className="flex">
-                      <div className="ml-3">
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          {data.email}
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4">
-                <Spinner />
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+              <div className="bg-white h-1/2 w-full rounded-3xl flex flex-col justify-around items-center pt-2 ">
+
+                <div className="w-full h-1/2 flex flex-col justify-center items-center">
+                  <img
+                    className="object-cover h-20 w-20 rounded-full "
+                    src={data.avatar}
+                    alt="avatar"
+                  />
+                  <h1 className="text-gray-500 text-sm pb-2">{`${data.first_name} ${data.last_name} `}</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      ) : (
+        <Spinner />
+
+      )}
       {isError && <div>Error fetching data.</div>}
-
     </div>
   );
 }
