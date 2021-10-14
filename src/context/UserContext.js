@@ -105,9 +105,9 @@ const UserProvider = ({ children }) => {
       setIsLoading(true);
       const response = await axios.get(`https://reqres.in/api/users?page=1`);
       const response2 = await axios.get(`https://reqres.in/api/users?page=2`);
-      var alphaNumeric = response.data.data.concat(response2.data.data);
+      var res = response.data.data.concat(response2.data.data);
       setIsLoading(false);
-      chunk(alphaNumeric, numberOfUser, page)
+      chunk(res, numberOfUser, page)
     } catch (error) {
       setIsLoading(false);
       setIsError(true);
