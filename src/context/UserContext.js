@@ -115,14 +115,14 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  const control = async (a) => {
+  const control = async (action) => {
     try {
-      if (a === 'next' && currentPage < 2) {
+      if (action === 'next' && currentPage < pageNumbers.total_pages) {
         let page = currentPage + 1
         setcurrentPage(page)
         fetchData(page)
       }
-      if (a === 'previus'  && currentPage >= 1) {
+      if (action === 'previus'  && currentPage >= 1) {
         let page = currentPage - 1
         setcurrentPage(page)
         fetchData(page)

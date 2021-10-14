@@ -3,7 +3,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     maxHeight: {
-      'card': '82vh',
+      'card': '80vh',
      }
 
   },
