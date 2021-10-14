@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
 import google from "../assets/google.png";
 import { useFormik } from "formik";
@@ -7,8 +7,7 @@ import { useHistory } from "react-router-dom";
 
 export default function Register() {
   const history = useHistory();
-  const { signInWithGoogle, registerWithEmailAndPassword, error } =
-    useContext(UserContext);
+  const { signInWithGoogle, registerWithEmailAndPassword, error } = useContext(UserContext);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -21,7 +20,6 @@ export default function Register() {
       repeatPassword: Yup.string().min(6, "Must have 6 characters or more").required("Required").oneOf([Yup.ref("password")], "Password not match"),
     }),
     onSubmit: (values) => {
-      // console.log(values);
       registerWithEmailAndPassword(values.email, values.password);
     },
   });
@@ -34,7 +32,7 @@ export default function Register() {
         <input
           id="email"
           name="email"
-          type="text"
+          type="email"
           placeholder="email"
           className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mb-4 mt-4"
           onChange={formik.handleChange}

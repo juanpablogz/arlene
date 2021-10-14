@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
 import UserContext from '../context/UserContext';
 
-export default function Pagination({ pageNumbers }) {
-  const { fetchData, currentPage, control } = useContext(UserContext);
+export default function Pagination() {
+  const { fetchData, currentPage, control, pageNumbers } = useContext(UserContext);
+  // const totalPages = pageNumbers.total_pages
+  const totalPages = [1,2]
+  
   return (
     <nav className="flex flex-row flex-nowrap justify-between md:justify-center items-center">
       <a onClick={() => control('previus') } className="flex w-10 h-10 mr-1 justify-center items-center rounded-full border border-gray-200 bg-white text-black hover:border-gray-300" href="#" title="Previous Page">
@@ -11,10 +14,9 @@ export default function Pagination({ pageNumbers }) {
           <path d="M238.475 475.535l7.071-7.07c4.686-4.686 4.686-12.284 0-16.971L50.053 256 245.546 60.506c4.686-4.686 4.686-12.284 0-16.971l-7.071-7.07c-4.686-4.686-12.284-4.686-16.97 0L10.454 247.515c-4.686 4.686-4.686 12.284 0 16.971l211.051 211.05c4.686 4.686 12.284 4.686 16.97-.001z"></path>
         </svg>
       </a>
-      {/* {console.log(currentPage)} */}
-      {pageNumbers.map(number => (
+      {totalPages.map(number => (
         <div key={number} >
-          <a onClick={() => fetchData(number)} className={ number === currentPage  ? "text-color: bg-blue-300 hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 text-black hover:border-gray-300" : "hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 text-black hover:border-gray-300" }>
+          <a onClick={() => fetchData(number)} className={ number === currentPage  ? "text-color: bg-blue-300  flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 text-black hover:border-gray-300" : " flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 text-black hover:border-gray-300" }>
             {number}
           </a>
         </div>

@@ -10,8 +10,6 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-
-import { getFirestore } from "firebase/firestore";
 const UserContext = createContext();
 
 const firebaseConfig = {
@@ -26,41 +24,33 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-const db = getFirestore(app);
-
-
-
 const googleProvider = new GoogleAuthProvider();
 
 const UserProvider = ({ children }) => {
-
   const history = useHistory();
   const [dataFetch, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [currentPage, setcurrentPage] = useState("1");
-
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
-  );
+  const [currentPage, setcurrentPage] = useState(1);
+  const [pageNumbers, setPageNumbers] = useState([1,2]);
   const [error, setError] = useState("");
+  const [user, setUser] = useState( JSON.parse(localStorage.getItem("user")) || null );
+
   const signInWithGoogle = async () => {
     try {
       signInWithPopup(auth, googleProvider)
         .then((result) => {
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential.accessToken;
           const user = result.user;
           localStorage.setItem("user", JSON.stringify(user));
           setUser(user);
           history.push("/dashboard");
         })
         .catch((err) => {
-          const credential = GoogleAuthProvider.credentialFromError(err);
+          setError(err)
           console.log(err);
         });
     } catch (err) {
-      console.error(err);
+      console.error('Invalid request');
     }
   };
 
@@ -106,7 +96,7 @@ const UserProvider = ({ children }) => {
         setUser(null);
       })
       .catch((error) => {
-        // An error happened.
+       console.log(error);
       });
   };
 
@@ -114,25 +104,25 @@ const UserProvider = ({ children }) => {
     try {
       setIsLoading(true);
       const response = await axios.get(`https://reqres.in/api/users?page=${page || 1}`);
+      console.log(response.data.total_page)
+      setPageNumbers(response.data)
       setIsLoading(false);
-      console.log(page)
       setcurrentPage(page || 1)
       setData(response.data.data);
     } catch (error) {
       setIsLoading(false);
       setIsError(true);
-      console.log(error);
     }
   };
 
   const control = async (a) => {
     try {
-      if (a == 'next' && currentPage < 7) {
+      if (a === 'next' && currentPage < 2) {
         let page = currentPage + 1
         setcurrentPage(page)
         fetchData(page)
       }
-      if (a == 'previus'  && currentPage >= 1) {
+      if (a === 'previus'  && currentPage >= 1) {
         let page = currentPage - 1
         setcurrentPage(page)
         fetchData(page)
@@ -166,7 +156,8 @@ const UserProvider = ({ children }) => {
     dataFetch,
     fetchData,
     currentPage,
-    control
+    control,
+    pageNumbers
   };
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
 };
