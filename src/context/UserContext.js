@@ -32,9 +32,9 @@ const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [currentPage, setcurrentPage] = useState(1);
-  const [pageNumbers, setPageNumbers] = useState([1,2]);
+  const [pageNumbers, setPageNumbers] = useState([]);
   const [error, setError] = useState("");
-  const [user, setUser] = useState( JSON.parse(localStorage.getItem("user")) || null );
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
 
   const signInWithGoogle = () => {
     try {
@@ -96,61 +96,67 @@ const UserProvider = ({ children }) => {
         setUser(null);
       })
       .catch((error) => {
-       console.log(error);
+        console.log(error);
       });
   };
 
-  const fetchData = async (page, numberOfUser = 3) => {
+  const fetchData = async (page = 0, numberOfUser = 4) => {
     try {
       setIsLoading(true);
-      console.log(numberOfUser);
-      const response = await axios.get(`https://reqres.in/api/users?page=${page || 1}`);
-      console.log(response.data.total_pages)
-      setPageNumbers(response.data.total_pages)
-      setData(response.data.data);
+      const response = await axios.get(`https://reqres.in/api/users?page=1`);
+      const response2 = await axios.get(`https://reqres.in/api/users?page=2`);
+      var alphaNumeric = response.data.data.concat(response2.data.data);
       setIsLoading(false);
-      setcurrentPage(page || 1)
-      if (numberOfUser < 6) {
-        var result = response.data.data.reduce((resultArray, item, index) => { 
-          const chunkIndex = Math.floor(index/numberOfUser)
-        
-          if(!resultArray[chunkIndex]) {
-            resultArray[chunkIndex] = [] // start a new chunk
-          }
-        
-          resultArray[chunkIndex].push(item)
-        
-          return resultArray
-        }, [])
-        setData(result[0])
-        setPageNumbers(result.length)
-        console.log(result.length)
-      }
+      chunk(alphaNumeric, numberOfUser, page)
     } catch (error) {
       setIsLoading(false);
       setIsError(true);
     }
   };
 
-  const control = (action) => {
+  const chunk = async (response = [], numberOfUser = 5, page = 1) => {
     try {
-      if (action === 'next' && currentPage < pageNumbers) {
+      console.log(response)
+      var result = response.reduce((resultArray, item, index) => {
+        const chunkIndex = Math.floor(index / numberOfUser)
+        if (!resultArray[chunkIndex]) {
+          resultArray[chunkIndex] = []
+        }
+        resultArray[chunkIndex].push(item)
+        return resultArray
+      }, [])
+      console.log(result)
+      if (result != 'undefined') {
+        setData(result[page])
+      }
+      setcurrentPage(page)
+      setPageNumbers(result.length)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const control = async (action) => {
+    try {
+      if (action === 'next' && currentPage < pageNumbers - 1) {
+        setIsLoading(true);
         let page = currentPage + 1
         setcurrentPage(page)
+        setIsLoading(false);
         fetchData(page)
       }
-      if (action === 'next' && currentPage >= pageNumbers) {
-        console.log('newfetch')
-      }
-      if (action === 'previus'  && currentPage >= 1) {
+      if (action === 'previus' && currentPage >= 1 && currentPage) {
         let page = currentPage - 1
+        setIsLoading(true);
         setcurrentPage(page)
         fetchData(page)
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     try {
       localStorage.setItem("user", JSON.stringify(user));

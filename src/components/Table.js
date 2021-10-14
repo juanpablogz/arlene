@@ -20,7 +20,7 @@ export default function Table() {
               <div className="bg-white h-1/2 w-full rounded-2xl flex flex-col justify-around items-center pt-2 px-3 py-5">
 
                 <div className="flex flex-col justify-center items-center">
-                  <h1 className="text-gray-500 font-bold text-sm pb-2">{`${data.first_name} ${data.last_name} `}</h1>
+                  <h1 className="text-gray-500 font-bold text-sm pb-2">{`${data.first_name} ${data.last_name} ${data.id}`}</h1>
                   <h2 className="text-gray-500 text-sm pb-2">{data.email}</h2>
                 </div>
               </div>
