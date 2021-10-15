@@ -1,6 +1,9 @@
 # REACT FIREBASE AUTH
 this project is carried out in react, has protected routes, a login system with google, email and password, connection to an api
 
+## Assumptions
+1. Any user can register and log in
+
 ## How to use
 1. Clone this repo
 1. npm install
