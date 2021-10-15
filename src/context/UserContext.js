@@ -11,15 +11,15 @@ import {
   signOut,
 } from "firebase/auth";
 const UserContext = createContext();
-
+console.log(process.env)
 const firebaseConfig = {
-  apiKey: "AIzaSyAVtq8g7QVMneLADNtNcB95SB9eZqYBBU0",
-  authDomain: "arlene-6e1b0.firebaseapp.com",
-  projectId: "arlene-6e1b0",
-  storageBucket: "arlene-6e1b0.appspot.com",
-  messagingSenderId: "231927501998",
-  appId: "1:231927501998:web:ad8a72450ac3fe503b493f",
-  measurementId: "G-JGR8LLCXFR",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
