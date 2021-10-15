@@ -34,7 +34,6 @@ const UserProvider = ({ children }) => {
   const [currentPage, setcurrentPage] = useState(0);
   const [pageNumbers, setPageNumbers] = useState([]);
   const [error, setError] = useState("");
-  const [totalPages, setTotalPages] = useState(5);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
 
   const signInWithGoogle = () => {
@@ -101,14 +100,14 @@ const UserProvider = ({ children }) => {
       });
   };
 
-  const fetchData = async (page, totalPages, change = false) => {
+  const fetchData = async (page = 0, totalPages) => {
     try {
       setIsLoading(true);
       const response = await axios.get(`https://reqres.in/api/users?page=1`);
       const response2 = await axios.get(`https://reqres.in/api/users?page=2`);
       var res = response.data.data.concat(response2.data.data);
       setIsLoading(false);
-      chunk(res, (totalPages || 5), page)
+      chunk(res, (totalPages), page)
     } catch (error) {
       setIsLoading(false);
       setIsError(true);
@@ -122,36 +121,17 @@ const UserProvider = ({ children }) => {
         const chunk = response.splice(0, totalPages);
         res.push(chunk);
       }
-      setData(res[page])
+      if (res[page] != null) {
+        setData(res[page])
+      } else {
+        setData(dataFetch)
+      }
       setcurrentPage(page)
-      console.log(res.length)
-      setPageNumbers(totalPages)
-
+      setPageNumbers(res.length)
     } catch (error) {
       console.log(error);
     }
   };
-
-  const control = async (action) => {
-    try {
-      if (action === 'next' && currentPage < pageNumbers - 1) {
-        setIsLoading(true);
-        let page = currentPage + 1
-        setIsLoading(false);
-        console.log(pageNumbers)
-        fetchData(page, 'pageNumbers')
-      }
-      if (action === 'previus' && currentPage >= 1 && currentPage) {
-        let page = currentPage - 1
-        setIsLoading(true);
-        fetchData(page, pageNumbers)
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     try {
       localStorage.setItem("user", JSON.stringify(user));
@@ -162,12 +142,12 @@ const UserProvider = ({ children }) => {
   }, [user, error]);
 
   useEffect(() => {
-    fetchData(currentPage, 5, true);
+    fetchData(0, 5);
   }, []);
 
   const data = {
-    error,
-    user,
+    error, 
+    user, 
     signInWithGoogle,
     registerWithEmailAndPassword,
     signIn,
@@ -177,7 +157,6 @@ const UserProvider = ({ children }) => {
     dataFetch,
     fetchData,
     currentPage,
-    control,
     pageNumbers
   };
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;

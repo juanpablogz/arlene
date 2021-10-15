@@ -16,7 +16,7 @@ export const Dashboard = () => {
     }),
     onSubmit: (values) => {
       let number = values.select
-      fetchData(currentPage, number, true)
+      fetchData(currentPage, number)
     },
   });
   return (
