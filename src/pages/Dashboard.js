@@ -24,14 +24,14 @@ export const Dashboard = () => {
       <div className="flex w-screen justify-end">
         <form
           onSubmit={formik.handleSubmit}
-          className="mt-4 mr-2"
+          className="mt-2 mr-24"
         >
           <input
             id="select"
             name="select"
             type="number"
             placeholder="Select How Many Users"
-            className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mb-4 mr-4"
+            className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mb-4"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.select}
@@ -40,7 +40,7 @@ export const Dashboard = () => {
             <span className="text-xs text-red-700" id="passwordHelp">{formik.errors.select}</span>
           ) : null}
         </form>
-        <button onClick={logout} className="shadow mb-2 text-white  w-20 rounded py-2 px-4 bg-red-400 hover:bg-red-600 mt-2 mr-2">
+        <button onClick={logout} className="shadow mb-2 text-white  w-20 rounded py-2 px-4 bg-red-400 hover:bg-red-600 mt-2 mr-2 absolute">
           logout
         </button>
       </div>
