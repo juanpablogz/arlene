@@ -9,7 +9,7 @@ export default function Pagination() {
   }
 
   return (
-    <nav className="flex flex-row flex-nowrap justify-center items-center mt-3">
+    <nav className="flex flex-row flex-nowrap justify-center items-center mt-2">
       {totalPages.length > 0 ?
         totalPages.map(number => (
           <div key={number} >
