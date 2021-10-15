@@ -9,7 +9,7 @@ this project is carried out in react, has protected routes, a login system with 
 1. paste your variables
 1. npm start
 
-## Features
+## technologies
 
 This template comes with:
 - React
