@@ -31,9 +31,10 @@ const UserProvider = ({ children }) => {
   const [dataFetch, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [currentPage, setcurrentPage] = useState(1);
+  const [currentPage, setcurrentPage] = useState(0);
   const [pageNumbers, setPageNumbers] = useState([]);
   const [error, setError] = useState("");
+  const [totalPages, setTotalPages] = useState(5);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
 
   const signInWithGoogle = () => {
@@ -100,42 +101,31 @@ const UserProvider = ({ children }) => {
       });
   };
 
-  const fetchData = async (page = 0, numberOfUser, newPagation) => {
+  const fetchData = async (page, totalPages, change = false) => {
     try {
       setIsLoading(true);
       const response = await axios.get(`https://reqres.in/api/users?page=1`);
       const response2 = await axios.get(`https://reqres.in/api/users?page=2`);
       var res = response.data.data.concat(response2.data.data);
       setIsLoading(false);
-      chunk(res, (numberOfUser || 5), page, newPagation)
+      chunk(res, (totalPages || 5), page)
     } catch (error) {
       setIsLoading(false);
       setIsError(true);
     }
   };
 
-  const chunk = async (response = [], numberOfUser, page, newPagation) => {
+  const chunk = async (response, totalPages, page) => {
     try {
-      var result = response.reduce((resultArray, item, index) => {
-        const chunkIndex = Math.floor(index / numberOfUser)
-        if (!resultArray[chunkIndex]) {
-          resultArray[chunkIndex] = []
-        }
-        resultArray[chunkIndex].push(item)
-        return resultArray
-      }, [])
-
-      if (result != 'undefined') {
-        setData(result[page])
+      const res = [];
+      while (response.length > 0) {
+        const chunk = response.splice(0, totalPages);
+        res.push(chunk);
       }
-      if (newPagation) {
-        console.log('newpage')
-        setPageNumbers(result.length)
-        console.log(result.length)
-      } else {
-        setPageNumbers(result.length)
-      }
+      setData(res[page])
       setcurrentPage(page)
+      console.log(res.length)
+      setPageNumbers(totalPages)
 
     } catch (error) {
       console.log(error);
@@ -148,12 +138,13 @@ const UserProvider = ({ children }) => {
         setIsLoading(true);
         let page = currentPage + 1
         setIsLoading(false);
-        fetchData(page)
+        console.log(pageNumbers)
+        fetchData(page, 'pageNumbers')
       }
       if (action === 'previus' && currentPage >= 1 && currentPage) {
         let page = currentPage - 1
         setIsLoading(true);
-        fetchData(page)
+        fetchData(page, pageNumbers)
         setIsLoading(false);
       }
     } catch (error) {
@@ -171,7 +162,7 @@ const UserProvider = ({ children }) => {
   }, [user, error]);
 
   useEffect(() => {
-    fetchData();
+    fetchData(currentPage, 5, true);
   }, []);
 
   const data = {

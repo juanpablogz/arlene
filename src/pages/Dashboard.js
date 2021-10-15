@@ -15,7 +15,8 @@ export const Dashboard = () => {
       select: Yup.number().max(9, "max number is 9")
     }),
     onSubmit: (values) => {
-      fetchData(currentPage, values.select, true)
+      let number = values.select
+      fetchData(currentPage, number, true)
     },
   });
   return (

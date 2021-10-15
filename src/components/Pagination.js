@@ -19,7 +19,7 @@ export default function Pagination() {
       {totalPages.length > 0 ?
         totalPages.map(number => (
           <div key={number} >
-            <a onClick={() => fetchData(number)} className={number === currentPage ? "text-color: bg-blue-300  flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 text-black hover:bg-blue-400 cursor-pointer" : " flex w-10 h-10 mx-1 justify-center items-center rounded-full border hover:bg-blue-300 text-black cursor-pointer"}>
+            <a onClick={() => fetchData(number, pageNumbers)} className={number === currentPage ? "text-color: bg-blue-300  flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 text-black hover:bg-blue-400 cursor-pointer" : " flex w-10 h-10 mx-1 justify-center items-center rounded-full border hover:bg-blue-300 text-black cursor-pointer"}>
               {number}
             </a>
           </div>
