@@ -100,23 +100,22 @@ const UserProvider = ({ children }) => {
       });
   };
 
-  const fetchData = async (page = 0, numberOfUser = 4) => {
+  const fetchData = async (page = 0, numberOfUser, newPagation) => {
     try {
       setIsLoading(true);
       const response = await axios.get(`https://reqres.in/api/users?page=1`);
       const response2 = await axios.get(`https://reqres.in/api/users?page=2`);
       var res = response.data.data.concat(response2.data.data);
       setIsLoading(false);
-      chunk(res, numberOfUser, page)
+      chunk(res, (numberOfUser || 5), page, newPagation)
     } catch (error) {
       setIsLoading(false);
       setIsError(true);
     }
   };
 
-  const chunk = async (response = [], numberOfUser = 5, page = 1) => {
+  const chunk = async (response = [], numberOfUser, page, newPagation) => {
     try {
-      console.log(response)
       var result = response.reduce((resultArray, item, index) => {
         const chunkIndex = Math.floor(index / numberOfUser)
         if (!resultArray[chunkIndex]) {
@@ -125,12 +124,19 @@ const UserProvider = ({ children }) => {
         resultArray[chunkIndex].push(item)
         return resultArray
       }, [])
-      console.log(result)
+
       if (result != 'undefined') {
         setData(result[page])
       }
+      if (newPagation) {
+        console.log('newpage')
+        setPageNumbers(result.length)
+        console.log(result.length)
+      } else {
+        setPageNumbers(result.length)
+      }
       setcurrentPage(page)
-      setPageNumbers(result.length)
+
     } catch (error) {
       console.log(error);
     }
@@ -141,14 +147,12 @@ const UserProvider = ({ children }) => {
       if (action === 'next' && currentPage < pageNumbers - 1) {
         setIsLoading(true);
         let page = currentPage + 1
-        setcurrentPage(page)
         setIsLoading(false);
         fetchData(page)
       }
       if (action === 'previus' && currentPage >= 1 && currentPage) {
         let page = currentPage - 1
         setIsLoading(true);
-        setcurrentPage(page)
         fetchData(page)
         setIsLoading(false);
       }

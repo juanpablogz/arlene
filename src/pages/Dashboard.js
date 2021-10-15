@@ -15,7 +15,7 @@ export const Dashboard = () => {
       select: Yup.number().max(9, "max number is 9")
     }),
     onSubmit: (values) => {
-      fetchData(currentPage, values.select)
+      fetchData(currentPage, values.select, true)
     },
   });
   return (
@@ -28,12 +28,12 @@ export const Dashboard = () => {
           <input
             id="select"
             name="select"
-            type="select"
+            type="number"
             placeholder="Select How Many Users"
             className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mb-4 mr-4"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.email}
+            value={formik.values.select}
           />
           {formik.touched.select && formik.errors.select ? (
             <span className="text-xs text-red-700" id="passwordHelp">{formik.errors.select}</span>
